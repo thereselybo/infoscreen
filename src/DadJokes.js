@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function DadJokes() {
-  const [joke, setJoke] = useState({});
+  const [joke, setJoke] = useState(false);
 
   useEffect(() => {
     fetch("https://www.reddit.com/r/dadjokes/top.json?t=day&limit=1")
@@ -10,13 +10,19 @@ export default function DadJokes() {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(joke);
-
+  if (joke) {
+    return (
+      <div className="joke">
+        <h2>Dad Joke of the day</h2>
+        <h3>{joke.title}</h3>
+        <p>{joke.selftext}</p>
+      </div>
+    );
+  }
   return (
     <div className="joke">
-      <h1>Dad Joke of the day</h1>
-      <h2>{joke.title}</h2>
-      <p>{joke.selftext}</p>
+      <h2>Dad Joke of the day</h2>
+      <h3>Sorry, no joke today :(</h3>
     </div>
   );
 }

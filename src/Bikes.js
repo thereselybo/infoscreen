@@ -7,7 +7,7 @@ const service = createEnturService({
 });
 
 export default function Bikes() {
-  const [bikeStations, setBikeStations] = useState(false);
+  const [bikeStations, setBikeStations] = useState([]);
   useEffect(() => {
     service
       .getBikeRentalStationsByPosition(
@@ -18,26 +18,21 @@ export default function Bikes() {
       .then((bikeStations) => setBikeStations(bikeStations));
   }, []);
 
-  //   useEffect(() => console.log("bike stations", bikeStations), [bikeStations]);
-  if (bikeStations) {
-    return (
-      <div className="bikes">
-        <h2>Bikes</h2>
-        {bikeStations.map((bikeStation) => {
-          return (
-            <Station
-              key={bikeStation.id}
-              station={bikeStation.name}
-              bikesAvailable={bikeStation.bikesAvailable}
-              spacesAvailable={bikeStation.spacesAvailable}
-            />
-          );
-        })}
-      </div>
-    );
-  }
-
-  return (
+  return bikeStations.length ? (
+    <div className="bikes">
+      <h2>Bikes</h2>
+      {bikeStations.map((bikeStation) => {
+        return (
+          <Station
+            key={bikeStation.id}
+            station={bikeStation.name}
+            bikesAvailable={bikeStation.bikesAvailable}
+            spacesAvailable={bikeStation.spacesAvailable}
+          />
+        );
+      })}
+    </div>
+  ) : (
     <div className="bikes">
       <h2>Bikes</h2>
       <h3>Sorry, no bikes nearby</h3>

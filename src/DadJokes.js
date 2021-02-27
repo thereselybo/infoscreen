@@ -10,16 +10,13 @@ export default function DadJokes() {
       .catch((error) => console.log(error));
   }, []);
 
-  if (joke) {
-    return (
-      <div className="joke">
-        <h2>Dad Joke of the day</h2>
-        <h3>{joke.title}</h3>
-        <p>{joke.selftext}</p>
-      </div>
-    );
-  }
-  return (
+  return joke.title ? (
+    <div className="joke">
+      <h2>Dad Joke of the day</h2>
+      <h3>{joke.title}</h3>
+      <p>{joke.selftext}</p>
+    </div>
+  ) : (
     <div className="joke">
       <h2>Dad Joke of the day</h2>
       <h3>Sorry, no joke today :(</h3>
